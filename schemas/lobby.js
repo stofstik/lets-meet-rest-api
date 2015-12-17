@@ -11,6 +11,13 @@ var lobbySchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     }],
+    chat: [{
+        user: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+        },
+        message: String
+    }],
     timeout: Date
 });
 
