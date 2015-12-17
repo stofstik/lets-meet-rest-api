@@ -90,7 +90,7 @@ app.post('/updateUser/:userId/:username/:email/:lat/:lng', function(req, res) {
 
 });
 
-// TODO notify of new user?
+// TODO notify users in lobby of new user
 app.post('/joinlobby/:name/:userId', function(req, res) {
     findLobby(req.params.name, function(lobby) {
         findUserById(req.params.userId, function(user) {
@@ -103,15 +103,13 @@ app.post('/joinlobby/:name/:userId', function(req, res) {
                         if (err) return console.error(err);
                         res.send(lobby);
                     });
-
-                // TODO get location from users in current lobby
             });
         });
     });
 });
 
 // TODO needs some thought
-// TODO notify other users we have left!
+// TODO notify users in lobby we have left!
 app.post('/exitlobby/:name/:userId', function(req, res) {
     findLobby(req.params.name, function(lobby) {
         findUserById(req.params.userId, function(user) {
@@ -123,11 +121,12 @@ app.post('/exitlobby/:name/:userId', function(req, res) {
     });
 });
 
+/*
+ * A user is requesting a lobby
+ * We check if the user exists in this lobby
+ * If so we res.send the data of all the users in the lobby
+ */
 app.post('/getlobby/:name/:userId', function(req, res) {
-    // TODO respond with all users in this lobby
-    // TODO only respond if this is a user in our database CHECK
-    // TODO only respond when this userId is in the lobby CHECK
-    // TODO food for thought
     console.log("User %s requesting lobby: %s", req.params.userId, req.params.name);
     findLobby(req.params.name, function(lobby) { // find the lobby
         findUserById(req.params.userId, function(user) { // find the user
